@@ -1,3 +1,6 @@
 [submodule "frontend-repo"]
 	path = frontend-repo
 	url = https://github.com/Ai-chemy/frontend-repo
+[submodule "backend-repo"]
+	path = backend-repo
+	url = https://github.com/Ai-chemy/backend-repo
