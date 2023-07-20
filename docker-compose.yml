@@ -8,3 +8,54 @@ services:
     restart: always
     ports:
       - "3000:3000"
+      
+  backend:
+    container_name: "backend"
+    build:
+      context: "./backend-repo"
+      dockerfile: Dockerfile
+    restart: always
+    ports:
+      - "8000:8000"
+    # links:
+    #   - mariadb:mariadb
+    depends_on:
+      - postgresql
+
+  # mariadb:
+  #   container_name: "mariadb"
+  #   image: mariadb:latest
+  #   expose:
+  #     - 3306
+  #   ports:
+  #     - "3366:3306"
+  #   restart: always
+  #   volumes:
+  #       - "./mariadb/conf.d:/etc/mysql/conf.d"
+  #       - "./mariadb/data:/var/lib/mysql"
+  #   # env_file: .env
+  #   environment:
+  #     MARIADB_DATABASE: user
+  #     MARIADB_USER: jh
+  #     MARIADB_PASSWORD: jh3548
+  #     MARIADB_ROOT_PASSWORD: jh3548
+  #     TZ: Asia/Seoul
+
+  postgresql:
+    container_name: "postgresql"
+    build:
+      context: ./postgresql
+      dockerfile: Dockerfile
+    image: "postgres:14"
+    ports:
+      - "5432:5432"
+    restart: always
+    volumes:
+      - ./db/postgres/:/var/lib/postgresql/data
+    # env_file: .env
+    environment:
+      POSTGRES_USER: "jh"
+      POSTGRES_PASSWORD: "jh3548"
+      POSTGRES_DB: "user"
+
+# 나중에 volume 옵션 사용하여 저장소 동기화하기
